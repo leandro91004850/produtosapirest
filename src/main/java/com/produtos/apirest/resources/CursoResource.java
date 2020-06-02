@@ -1,10 +1,13 @@
 package com.produtos.apirest.resources;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,6 +45,16 @@ public class CursoResource {
 	@PostMapping("/cursos")
 	public Cursos salvarProduto(@RequestBody Cursos cursos) {
 		return servico.save(cursos);
+	}
+	
+	// update cursos
+	@PutMapping("/cursos/{id}")
+	public ResponseEntity<Object> atualizarCurso(@RequestBody Cursos cursos, @PathVariable int id) {
+		Cursos curso = servico.findById(id);
+		cursos.setId(id);
+		servico.save(cursos);
+		
+		return ResponseEntity.noContent().build();
 	}
 	
 }
